@@ -1,0 +1,178 @@
+#monthView table {
+	text-align:center;
+}
+#monthView table tr {
+	
+}
+#monthView table td, #monthView table th {
+	width:14.2857143%;
+	line-height:45.7142857px;
+}
+#monthView table td {
+	border:1px solid #aaa;
+	border-radius:4px 4px;
+}
+#monthView table td.before, #monthView table td.after {
+	color:#aaa;
+}
+#monthView span a, #weekView span a, #dayView span a {
+	padding:0 10px;
+	text-align:center;
+}
+/*[data-role=page] {
+	height: 100% !important; 
+	position:relative !important;
+}
+[data-role=footer] {
+	bottom:0; 
+	position:absolute !important; 
+	top: auto !important; 
+	width:100%;
+}*/
+#monthHeader .mthBtnLeft, #monthHeader .mthBtnRight {
+	background:transparent;
+	border:none;
+	text-decoration:none;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1.5em;
+	margin:8px 10px;
+}
+#monthHeader .mthBtnLeft {
+	float:left;
+}
+#monthHeader .mthBtnRight {
+	float:right;
+}
+#weekHeader .wkBtnLeft, #weekHeader .wkBtnRight, #weekHeader .syncButton, #weekHeader .loadButton {
+	background:transparent;
+	border:none;
+	text-decoration:none;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1.5em;
+	margin:0 5px;
+}
+/*#weekHeader .wkBtnLeft {
+	float:left;
+}
+#weekHeader .wkBtnRight {
+	float:right;
+}*/
+#weekHeader .syncButton {
+	float:left;
+}
+#weekHeader .loadButton {
+	float:right;
+}
+#weekHeader {
+	text-align:center;
+}
+#weekHeader * {
+	display:inline;
+}
+#monthHeader .wkBtnLeft, #monthHeader .wkBtnRight, #monthHeader .syncButton, #monthHeader .loadButton {
+	background:transparent;
+	border:none;
+	text-decoration:none;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1.3em;
+	margin:0 5px;
+}
+#monthHeader .syncButton {
+	float:left;
+}
+#monthHeader .loadButton {
+	float:right;
+}
+#monthHeader {
+	text-align:center;
+}
+#monthHeader * {
+	display:inline;
+}
+#dayHeader .wkBtnLeft, #dayHeader .wkBtnRight, #dayHeader .syncButton, #dayHeader .loadButton {
+	background:transparent;
+	border:none;
+	text-decoration:none;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1.2em;
+	margin:0 5px;
+}
+#dayHeader .syncButton {
+	float:left;
+}
+#dayHeader .loadButton {
+	float:right;
+}
+#dayHeader {
+	text-align:center;
+}
+#dayHeader * {
+	display:inline;
+}
+#dayHeader .dayBtnLeft, #dayHeader .dayBtnRight {
+	background:transparent;
+	border:none;
+	text-decoration:none;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1.2em;
+	margin:8px 10px;
+}
+#dayHeader .dayBtnLeft {
+	float:left;
+}
+#dayHeader .dayBtnRight {
+	float:right;
+}
+#dayHeader .dayTitle {
+	font-weight:200;
+	font-size:1.2em;
+	text-align:center;
+	margin:10px auto;
+}
+#dayView .testevent p {
+	display:inline;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1em;
+}
+#dayView .testevent .lawyer, #dayView .testevent .time {
+	margin-right:10px;
+}
+#weekView .testevent p {
+	display:inline;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1em;
+}
+#weekView .testevent .lawyer, #weekView .testevent .time {
+	margin-right:10px;
+}
+.foot {
+	text-align:center;
+	padding:10px 0;
+}
+.foot #footButton {
+	font-size:1.5em;
+	font-weight:200;
+	text-decoration:none;
+}
+#testEvent .lawyerWrap p, #testEvent .locationWrap p {
+	display:inline;
+	margin:10px 0;
+	padding:0 5px;
+}
+#testEvent .lawyerWrap, #testEvent .locationWrap {
+	clear:both;
+	border-top:1px solid gray;
+}
+#testEvent .left {
+	float:left;
+}
+#testEvent .right {
+	float:right;
+}

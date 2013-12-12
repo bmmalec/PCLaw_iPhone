@@ -1,0 +1,116 @@
+/* jQuery Mobile Width Styles */
+
+div[data-role=header], div[data-role=footer], div[data-role=content] {
+	width:320px;
+	margin:0 auto;
+}
+
+div[data-role=content] {
+	padding:0;
+}
+
+#weekList {
+	width:320px;
+}
+
+.ui-content .ui-listview, .ui-listview-filter {
+	margin:0;
+}
+
+/* Header Styles */
+
+#monthHeader .syncButton, #weekHeader .syncButton, #dayHeader .syncButton {
+	float:left;
+}
+#monthHeader .loadButton, #weekHeader .loadButton, #dayHeader .loadButton {
+	float:right;
+}
+#monthHeader h1, #weekHeader h1, #dayHeader h1, #testEvent h1, #toggle h1{
+	text-align:center;
+	font-weight:200;
+	font-size:1.5em;
+	margin: 10px auto;
+}
+
+/* Day and Week List Item Styles */
+
+#dayView .testevent p, #weekView .testevent p {
+	display:inline;
+	font-family:"Helvetica Neue";
+	font-weight:200;
+	font-size:1em;
+}
+#dayView .testevent .lawyer, #dayView .testevent .time,
+#weekView .testevent .lawyer, #weekView .testevent .time {
+	margin-right:10px;
+}
+
+/* Month View Styles */
+
+#monthView table {
+	width:100%;
+	text-align:center;
+	margin:0 auto;
+}
+#monthView table td, #monthView table th {
+	width:14.2857143%;
+	line-height:45.7142857px;
+}
+#monthView table td {
+	border:1px solid #aaa;
+	border-radius:4px 4px;
+}
+#monthView table td.before, #monthView table td.after {
+	color:#aaa;
+}
+#monthView .gotoday {
+	text-align:center;
+	font-weight:200;
+	text-decoration:none;
+}
+#monthView p {
+	text-align:center;
+}
+
+/* Footer Styles */
+
+#footButton {
+	font-size:1.2em;
+	font-weight:200;
+	text-decoration:none;
+	margin:0 5px;
+}
+.ui-footer {
+	padding:15px 0;
+	text-align:center;
+}
+.foot .footSpan a {
+	text-align:center;
+}
+.toggleLWR {
+	float:left;
+}	
+
+/* Submenu Styles */
+
+#testEvent a[data-rel=back], #toggle a[data-rel=back] {
+	margin-top:4px;
+}
+#testEvent .subject, #testEvent .start, #testEvent .end {
+	padding:0 10px;
+}
+#testEvent .lawyerWrap p, #testEvent .locationWrap p {
+	display:inline;
+	margin:10px 0;
+	padding:0 10px;
+}
+#testEvent .lawyerWrap, #testEvent .locationWrap {
+	clear:both;
+	border-top:1px solid gray;
+}
+#testEvent .left {
+	float:left;
+}
+#testEvent .right {
+	float:right;
+}
