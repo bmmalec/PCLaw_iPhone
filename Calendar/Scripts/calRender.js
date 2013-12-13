@@ -108,6 +108,10 @@ $(function () {
 		switchTimeFrame('#monthsForward span span','Forward');
 	});
 	
+	$('#dbreset').click(function() {
+		dbResetAndReload();
+	});
+	
 	evtHand(selectedMonth);
 	
 	//loadToggleList();
@@ -742,4 +746,14 @@ function switchTimeFrame(container,direction) {
 	} else {
 		$(container).text('1 Month ' + direction);
 	}
+}
+
+function dbResetAndReload() {
+	//Confirm Deletion
+	if (!confirm("Delete table?", "")) return;;
+    db.transaction(function (transaction) {
+        var sql = "DROP TABLE appts";
+        transaction.executeSql(sql, undefined, ok, error);
+    });
+    setupdb();
 }
