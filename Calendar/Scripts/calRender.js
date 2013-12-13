@@ -1,5 +1,7 @@
 $(function () {
 
+	checkForTable();
+	
 	TL();
 
 	var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -88,6 +90,22 @@ $(function () {
 		var day = new Date($('.storedVars .dayVar').html());
 		selectedDay = goForwardOneDay(day,days);
 		$('.storedVars .dayVar').html(selectedDay);
+	});
+	
+	//evt Handlers for Lwr and Config Transitions
+	$('.l_img').click(function() {
+		goTo('#toggle');
+	});
+	$('.c_img').click(function() {
+		goTo('#settingspage');
+	});
+	
+	//evt Handlers for Time Frame Change Buttons
+	$('#monthsBack').click(function() {
+		switchTimeFrame('#monthsBack span span','Back');
+	});
+	$('#monthsForward').click(function() {
+		switchTimeFrame('#monthsForward span span','Forward');
 	});
 	
 	evtHand(selectedMonth);
@@ -684,4 +702,44 @@ function toggle() {
 			load();
 		}
 	});
+}
+
+// ------------ Misc Functions -------------- //
+
+function checkForTable() {  //Called on Line 1 of doc ready
+	var sql = "SELECT * FROM appts LIMIT 1";
+	db.transaction(function(transaction) {
+		transaction.executeSql(sql,undefined,function(transaction,result) {
+			//Successful grab. Is a table, hide sync button, load tables
+			$('.syncButton').css({'visibility':'hidden'});
+			load();
+		},
+		function() {
+			//Error. No table, unhide sync button
+			$('.syncButton').css({'visibility':'visible'});
+		});
+	});
+}
+
+function goTo(page) {
+	$.mobile.changePage($(page),{transition:'none'});
+}
+
+function switchTimeFrame(container,direction) {
+	var tf_str = $(container).text();
+	var tf;
+	if (tf_str.charAt(1) == ' ') {
+		tf = tf_str.substr(0,1);
+	} else {
+		tf = tf_str.substr(0,2);
+	}
+	if (tf == 1) {
+		$(container).text('3 Months ' + direction);
+	} else if (tf == 3) {
+		$(container).text('6 Months ' + direction);
+	} else if (tf == 6) {
+		$(container).text('12 Months ' + direction);
+	} else {
+		$(container).text('1 Month ' + direction);
+	}
 }

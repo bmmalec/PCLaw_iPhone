@@ -161,6 +161,7 @@ function InfoByDate(sDate, eDate) {
                 });
 
             });
+            load();
         },
         error: function (e) {
             $(divToBeWorkedOn).html("Unavailable");

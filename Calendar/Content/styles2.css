@@ -81,7 +81,7 @@ div[data-role=content] {
 	margin:0 5px;
 }
 .ui-footer {
-	padding:15px 0;
+	padding:10px 0;
 	text-align:center;
 }
 .foot .footSpan a {
@@ -113,4 +113,25 @@ div[data-role=content] {
 }
 #testEvent .right {
 	float:right;
+}
+
+/* New Footer Settings */
+
+.l_img {
+	float:left;
+	margin-left:10px;
+}
+.c_img {
+	float:right;
+	margin-right:10px;
+}
+#f_text {
+	line-height:23px;
+}
+#f_text a.ui-link {
+	width:50px;
+	font-weight:200;
+	text-decoration:none;!important
+	font-size:1.2em;
+	margin:0 10px;
 }
