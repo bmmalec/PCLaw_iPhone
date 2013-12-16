@@ -750,7 +750,7 @@ function switchTimeFrame(container,direction) {
 
 function dbResetAndReload() {
 	//Confirm Deletion
-	if (!confirm("Delete table?", "")) return;;
+	if (!confirm("Are you sure you want to sync?", "")) return;;
     db.transaction(function (transaction) {
         var sql = "DROP TABLE appts";
         transaction.executeSql(sql, undefined, ok, error);

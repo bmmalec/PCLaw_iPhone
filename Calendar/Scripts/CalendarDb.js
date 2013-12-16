@@ -9,7 +9,7 @@ function setupdb() {
             "caldate varchar(100), starttm VARCHAR(100) NOT NULL, " +
             "endtm VARCHAR(100) NOT NULL, lawyer VARCHAR(100) NOT NULL, subject VARCHAR(500) NOT NULL)"
         transaction.executeSql(sql, undefined, function () {
-            alert("Table created");
+            //alert("Table created");
         }, error);
     });
 
@@ -130,7 +130,7 @@ function InfoByDate(sDate, eDate) {
     // var webMethod = "http://localhost:56404/PCLawGateway.asmx/GetCalendarByDates";
     var webMethod = "http://bruninglaw.com/PCLawGateway.asmx/GetCalendarByDates";
 
-    var parameters = "{StartDate:'10/1/2013', EndDate:'12/31/2013'}";
+    var parameters = "{StartDate:'10/1/2013', EndDate:'12/31/2014'}";
 
     $.ajax({
         type: "POST",
@@ -167,7 +167,7 @@ function InfoByDate(sDate, eDate) {
             $(divToBeWorkedOn).html("Unavailable");
         }
     });
-    alert("WS inserted");
+    //alert("WS inserted");
 };
 
 function ok() {
