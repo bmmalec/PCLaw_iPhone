@@ -111,6 +111,9 @@ $(function () {
 	$('#dbreset').click(function() {
 		dbResetAndReload();
 	});
+	$('#test_db').click(function() {
+		dbDiagnostics();
+	});
 	
 	evtHand(selectedMonth);
 	
@@ -756,4 +759,47 @@ function dbResetAndReload() {
         transaction.executeSql(sql, undefined, ok, error);
     });
     setupdb();
+}
+
+function dbDiagnostics() {
+	var c = '#db_test_results';
+	$(c).html('');
+	$(c).append('<li data-role=list-divider>Test Results</li>');
+	
+	//test 1
+	test_db_exists(c);
+	
+	//test 2
+	test_table_exists(c);
+	
+	//test 3
+	table_count(c);
+	
+	$(c).listview('refresh');
+}
+
+function test_db_exists(c) {
+	if (db) {
+		$(c).append('<li>Database Exists</li>');
+	} else {
+		$(c).append('<li>Database Error: Does not exist</li>');
+	}
+}
+function test_table_exists(c) {
+	var sql = "SELECT * FROM appts LIMIT 1";
+	db.transaction(function(transaction) {
+		transaction.executeSql(sql, undefined, function() { $(c).append('<li>Table Exists</li>');$(c).listview('refresh'); }, function() { $(c).append('<li>Database Error: Table not found</li>');$(c).listview('refresh'); });
+	});
+}
+function table_count(c) {
+	var sql = "SELECT COUNT(*) AS cnt from appts";
+	db.transaction(function(transaction) {
+		transaction.executeSql(sql, undefined, function(transaction,result) {
+			$(c).append('<li>' + result.rows.item(0).cnt + ' records found in table</li>');
+			$(c).listview('refresh');
+		}, function () {
+			$(c).append('<li>Error in finding record count</li>');
+			$(c).listview('refresh');
+		});
+	});
 }
