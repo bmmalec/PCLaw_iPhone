@@ -25,7 +25,7 @@ div[data-role=content] {
 #monthHeader .loadButton, #weekHeader .loadButton, #dayHeader .loadButton {
 	float:right;
 }
-#monthHeader h1, #weekHeader h1, #dayHeader h1, #testEvent h1, #toggle h1{
+#monthHeader h1, #weekHeader h1, #dayHeader h1, #testEvent h1, #toggle h1, #settingspage h1 {
 	text-align:center;
 	font-weight:200;
 	font-size:1.5em;
@@ -81,8 +81,9 @@ div[data-role=content] {
 	margin:0 5px;
 }
 .ui-footer {
-	padding:15px 0;
+	padding:5px 0;
 	text-align:center;
+	font-size:1.2em;
 }
 .foot .footSpan a {
 	text-align:center;
@@ -93,7 +94,7 @@ div[data-role=content] {
 
 /* Submenu Styles */
 
-#testEvent a[data-rel=back], #toggle a[data-rel=back] {
+#testEvent a[data-rel=back], #toggle a[data-rel=back], #settingspage a[data-rel=back] {
 	margin-top:4px;
 }
 #testEvent .subject, #testEvent .start, #testEvent .end {
@@ -113,4 +114,27 @@ div[data-role=content] {
 }
 #testEvent .right {
 	float:right;
+}
+
+/* New Footer Settings */
+
+.l_img {
+	float:left;
+	margin-left:10px;
+	height:32px;
+}
+.c_img {
+	float:right;
+	margin-right:10px;
+	height:32px;
+}
+#f_text {
+	line-height:32px;
+}
+#f_text a.ui-link {
+	width:50px;
+	font-weight:200;
+	text-decoration:none;!important
+	font-size:1.4em;
+	margin:0 10px;
 }

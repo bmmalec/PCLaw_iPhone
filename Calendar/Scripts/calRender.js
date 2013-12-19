@@ -1,5 +1,7 @@
 $(function () {
 
+	checkForTable();
+	
 	TL();
 
 	var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -88,6 +90,29 @@ $(function () {
 		var day = new Date($('.storedVars .dayVar').html());
 		selectedDay = goForwardOneDay(day,days);
 		$('.storedVars .dayVar').html(selectedDay);
+	});
+	
+	//evt Handlers for Lwr and Config Transitions
+	$('.l_img').click(function() {
+		goTo('#toggle');
+	});
+	$('.c_img').click(function() {
+		goTo('#settingspage');
+	});
+	
+	//evt Handlers for Time Frame Change Buttons
+	$('#monthsBack').click(function() {
+		switchTimeFrame('#monthsBack span span','Back');
+	});
+	$('#monthsForward').click(function() {
+		switchTimeFrame('#monthsForward span span','Forward');
+	});
+	
+	$('#dbreset').click(function() {
+		dbResetAndReload();
+	});
+	$('#test_db').click(function() {
+		dbDiagnostics();
 	});
 	
 	evtHand(selectedMonth);
@@ -683,5 +708,98 @@ function toggle() {
 			loadToggleList();
 			load();
 		}
+	});
+}
+
+// ------------ Misc Functions -------------- //
+
+function checkForTable() {  //Called on Line 1 of doc ready
+	var sql = "SELECT * FROM appts LIMIT 1";
+	db.transaction(function(transaction) {
+		transaction.executeSql(sql,undefined,function(transaction,result) {
+			//Successful grab. Is a table, hide sync button, load tables
+			$('.syncButton').css({'visibility':'hidden'});
+			load();
+		},
+		function() {
+			//Error. No table, unhide sync button
+			$('.syncButton').css({'visibility':'visible'});
+		});
+	});
+}
+
+function goTo(page) {
+	$.mobile.changePage($(page),{transition:'none'});
+}
+
+function switchTimeFrame(container,direction) {
+	var tf_str = $(container).text();
+	var tf;
+	if (tf_str.charAt(1) == ' ') {
+		tf = tf_str.substr(0,1);
+	} else {
+		tf = tf_str.substr(0,2);
+	}
+	if (tf == 1) {
+		$(container).text('3 Months ' + direction);
+	} else if (tf == 3) {
+		$(container).text('6 Months ' + direction);
+	} else if (tf == 6) {
+		$(container).text('12 Months ' + direction);
+	} else {
+		$(container).text('1 Month ' + direction);
+	}
+}
+
+function dbResetAndReload() {
+	//Confirm Deletion
+	if (!confirm("Are you sure you want to sync?", "")) return;;
+    db.transaction(function (transaction) {
+        var sql = "DROP TABLE appts";
+        transaction.executeSql(sql, undefined, ok, error);
+    });
+    setupdb();
+}
+
+function dbDiagnostics() {
+	var c = '#db_test_results';
+	$(c).html('');
+	$(c).append('<li data-role=list-divider>Test Results</li>');
+	
+	//test 1
+	test_db_exists(c);
+	
+	//test 2
+	test_table_exists(c);
+	
+	//test 3
+	table_count(c);
+	
+	$(c).listview('refresh');
+}
+
+function test_db_exists(c) {
+	if (db) {
+		$(c).append('<li>Database Exists</li>');
+	} else {
+		$(c).append('<li>Database Error: Does not exist</li>');
+	}
+}
+function test_table_exists(c) {
+	var sql = "SELECT * FROM appts LIMIT 1";
+	db.transaction(function(transaction) {
+		transaction.executeSql(sql, undefined, function() { $(c).append('<li>Table Exists</li>');$(c).listview('refresh'); }, function() { $(c).append('<li>Database Error: Table not found</li>');$(c).listview('refresh'); });
+	});
+}
+function table_count(c) {
+	var sql = "SELECT COUNT(*) AS cnt from appts";
+	db.transaction(function(transaction) {
+		transaction.executeSql(sql, undefined, function(transaction,result) {
+			$(c).append('<li>' + result.rows.item(0).cnt + ' records found in table</li>');
+			$(c).listview('refresh');
+		}, function () {
+			$(c).append('<li>Error in finding record count</li>');
+			$(c).listview('refresh');
+		});
 	});
 }
