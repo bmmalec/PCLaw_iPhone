@@ -12,10 +12,48 @@ function setupdb() {
             //alert("Table created");
         }, error);
     });
-
+	
+	var dates = getDatesBackAndForward();
     // Call web service and get appointments
-    InfoByDate('10/1/2013', '12/31/2013');
+    InfoByDate(dates[0], dates[1]);
 
+}
+function getDatesBackAndForward() {
+	//Check for time frame dates for reSync DB
+	var now = new Date();
+	
+	//Before
+	var tf_str = $('#monthsBack span span').text();
+	var tf_before;
+	if (tf_str.charAt(1) == ' ') {
+		tf_before = tf_str.substr(0,1);
+	} else {
+		tf_before = tf_str.substr(0,2);
+	}
+	//After
+	var tf_str = $('#monthsForward span span').text();
+	var tf_after;
+	if (tf_str.charAt(1) == ' ') {
+		tf_after = tf_str.substr(0,1);
+	} else {
+		tf_after = tf_str.substr(0,2);
+	}
+	
+	var pd_before = new Date(now.getFullYear(),(now.getMonth()-(tf_before*1)),now.getDate());
+	var pd_after = new Date(now.getFullYear(),(now.getMonth()+(tf_after*1)),now.getDate());
+	
+	//Change to 'mm/dd/yyyy'
+	date_before = changeMonth(pd_before.getMonth()) + '/' + pd_before.getDate() + '/' + pd_before.getFullYear();
+	date_after = changeMonth(pd_after.getMonth()) + '/' + pd_after.getDate() + '/' + pd_after.getFullYear();
+	return [date_before, date_after];
+}
+function changeMonth(mth) {
+	// This Function helps with the changing of month from zero-index to normal cal month values
+	if (mth == 12) {
+		return 1;
+	} else {
+		return mth + 1;
+	}
 }
 
 /*
@@ -130,7 +168,7 @@ function InfoByDate(sDate, eDate) {
     // var webMethod = "http://localhost:56404/PCLawGateway.asmx/GetCalendarByDates";
     var webMethod = "http://bruninglaw.com/PCLawGateway.asmx/GetCalendarByDates";
 
-    var parameters = "{StartDate:'10/1/2013', EndDate:'12/31/2014'}";
+    var parameters = "{StartDate:'"+sDate+"', EndDate:'"+eDate+"'}";
 
     $.ajax({
         type: "POST",
