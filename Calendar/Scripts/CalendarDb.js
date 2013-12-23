@@ -4,7 +4,7 @@ function setupdb() {
     
     // Create table for appointments
     db.transaction(function (transaction) {
-        var sql = "CREATE TABLE appts " +
+        var sql = "CREATE TABLE IF NOT EXISTS appts " +
             " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
             "caldate varchar(100), starttm VARCHAR(100) NOT NULL, " +
             "endtm VARCHAR(100) NOT NULL, lawyer VARCHAR(100) NOT NULL, subject VARCHAR(500) NOT NULL)"
@@ -100,7 +100,7 @@ function Right(str, len) {
     return ret;
 }
 
-function TL() {
+function loadLawyers() {
 	var webMethod = "http://bruninglaw.com/PCLawGateway.asmx/GetLawyerList";
 	
 	$('.totalLawyers').html('');

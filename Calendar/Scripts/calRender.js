@@ -1,10 +1,8 @@
-//THIS IS PUSHED TO THE NEW BRANCH
-
 $(function () {
 
 	checkForTable();
 	
-	TL();
+	loadLawyers();
 
 	var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 	var monthsTrunc = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -763,45 +761,81 @@ function dbResetAndReload() {
     setupdb();
 }
 
+// --------- DB DIAGNOSTICS ------------- //
+
 function dbDiagnostics() {
 	var c = '#db_test_results';
 	$(c).html('');
 	$(c).append('<li data-role=list-divider>Test Results</li>');
 	
 	//test 1
-	test_db_exists(c);
+	try { test_db_exists(c); } catch(err) { addErrorToStorage(err); return; }
 	
-	//test 2
-	test_table_exists(c);
-	
-	//test 3
-	table_count(c);
+	//SQL-dependent tests
+	async_tests(c);
 	
 	$(c).listview('refresh');
+	
+	//log local storage
+	logLocalStorage();
+	
 }
 
 function test_db_exists(c) {
 	if (db) {
 		$(c).append('<li>Database Exists</li>');
 	} else {
-		$(c).append('<li>Database Error: Does not exist</li>');
+		throw {
+			name: "Database Error",
+			message: "Database Does Not Exist.",
+			run_func: arguments.callee.name,
+			toString: function() { return this.name + ": " + this.message + " Run in function: " + this.run_func; }
+		} 
 	}
 }
-function test_table_exists(c) {
-	var sql = "SELECT * FROM appts LIMIT 1";
+function async_tests(c) {
+	//First run table_exists
+	var tbl = "appts"
+	var sql = "SELECT * FROM "+tbl+" LIMIT 1";
 	db.transaction(function(transaction) {
-		transaction.executeSql(sql, undefined, function() { $(c).append('<li>Table Exists</li>');$(c).listview('refresh'); }, function() { $(c).append('<li>Database Error: Table not found</li>');$(c).listview('refresh'); });
-	});
-}
-function table_count(c) {
-	var sql = "SELECT COUNT(*) AS cnt from appts";
-	db.transaction(function(transaction) {
-		transaction.executeSql(sql, undefined, function(transaction,result) {
-			$(c).append('<li>' + result.rows.item(0).cnt + ' records found in table</li>');
+		transaction.executeSql(sql, undefined, function() { 
+			$(c).append('<li>Table Exists</li>');
 			$(c).listview('refresh');
-		}, function () {
-			$(c).append('<li>Error in finding record count</li>');
-			$(c).listview('refresh');
+			
+			//On success of first test, run table_count
+			var sql = "SELECT COUNT(*) AS cnt from appts_2";
+			db.transaction(function(transaction) {
+				transaction.executeSql(sql, undefined, function(transaction,result) {
+					$(c).append('<li>' + result.rows.item(0).cnt + ' records found in table</li>');
+					$(c).listview('refresh');
+					
+					//On success, run another test, nest them like this until all tests are done
+				}, function () {
+					//On error, try a thrown error, catch and log to localstorage
+					try {
+						throw {
+							name: "Database Error",
+							message: "Error finding rows in table. Table or rows may not exist.",
+							run_func: "async_tests, test 2",
+							toString: function() {return this.name + ": " + this.message + " Run in function: " + this.run_func;}
+						}
+					} catch(err) {
+						addErrorToStorage(err);
+					}
+				});
+			});
+		}, function() {
+			//On error, try a thrown error, catch and log to localstorage
+			try {
+				throw {
+					name: "Database Error",
+					message: "Table does not exist.",
+					run_func: "async_tests, test 1",
+					toString: function() {return this.name + ": " + this.message + " Run in function: " + this.run_func;}
+				}
+			} catch(err) {
+				addErrorToStorage(err);
+			}
 		});
 	});
 }
